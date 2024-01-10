@@ -1,0 +1,43 @@
+trigger:
+  - none
+
+schedules:
+- cron: '05 18 * * MON,TUE,WED,THU,FRI'
+  displayName: 'Downscale schedule'
+  branches:
+    include:
+    - main
+#- cron: '30 4 * * MON,TUE,WED,THU,FRI'
+#  displayName: 'Downscale schedule'
+#  branches:
+#    include:
+#    - master
+stages:
+- stage: Downscale
+  displayName: 'Downscale schedule'
+  condition: eq(variables['Build.CronSchedule.DisplayName'], 'Downscale schedule')
+  jobs:
+    - job: DownscaleAppService
+      displayName: 'Down scale AppService'
+      steps:
+        - script: |
+           echo 'Down scale AppService Job'
+    - job: SupressAlerts
+      displayName: 'Supress Alerts'
+      steps:
+        - script: |
+           echo 'Supress Alerts Job'
+- stage: Upscale
+  displayName: 'Upscale schedule'
+  condition: eq(variables['Build.CronSchedule.DisplayName'], 'Upscale schedule')
+  jobs:
+    - job: UpscaleAppService
+      displayName: 'Up scale AppService'
+      steps:
+        - script: |
+           echo 'Up scale AppService Job'
+    - job: EnableAlerts
+      displayName: 'Enable Alerts'
+      steps:
+        - script: |
+           echo 'Enable Alerts Job'
