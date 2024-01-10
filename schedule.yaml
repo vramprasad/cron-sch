@@ -7,11 +7,11 @@ schedules:
   branches:
     include:
     - main
-#- cron: '30 4 * * MON,TUE,WED,THU,FRI'
-#  displayName: 'Downscale schedule'
-#  branches:
-#    include:
-#    - master
+- cron: '00 01 * * MON,TUE,WED,THU,FRI'
+  displayName: 'Upscale schedule'
+  branches:
+    include:
+    - main
 stages:
 - stage: Downscale
   displayName: 'Downscale schedule'
